@@ -34,7 +34,7 @@ class PersonCard extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.card} backgroundColor={this.props.identified ? "#ff00ff" : "#ffffff"}>
+      <Card className={classes.card} style={{ backgroundColor: this.props.identified ? "#00ff00" : "#ffffff" }} >
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h6" variant="h6" >
@@ -50,7 +50,7 @@ class PersonCard extends React.Component {
           image={this.props.avatarURL}
           title=""
         />
-      </Card >
+      </ Card >
     )
   }
 }
