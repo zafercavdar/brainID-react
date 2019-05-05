@@ -31,10 +31,18 @@ const styles = theme => ({
 
 
 class PersonCard extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      identified: false
+    }
+  }
+
+
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.card} style={{ backgroundColor: this.props.identified ? "#00ff00" : "#ffffff" }} >
+      <Card className={classes.card} style={{ backgroundColor: this.state.identified ? "#00ff00" : "#ffffff" }} >
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h6" variant="h6" >
