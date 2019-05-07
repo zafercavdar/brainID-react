@@ -19,11 +19,12 @@ class App extends React.Component {
     this.state = {
       identified: null,
       completed: 0,
+      started: false,
     }
   }
 
   componentDidMount() {
-    this.timer = setInterval(this.progress, 20);
+    this.timer = setInterval(this.progress, 100);
   }
 
   componentWillUnmount() {
@@ -31,9 +32,15 @@ class App extends React.Component {
   }
 
   progress = () => {
-    const { completed } = this.state;
-    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
+    const { completed, started } = this.state;
+    if (started) {
+      this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
+    }
   };
+
+  buttonHandler = () => {
+    this.setState({ started: !this.state.started })
+  }
 
   render() {
     const { classes } = this.props;
@@ -43,8 +50,8 @@ class App extends React.Component {
           <p>
             Human Identification Using Recurrent Neural Networks
           </p>
-          <Button variant="contained" color="primary">
-            Start Recording
+          <Button variant="contained" color="primary" onClick={this.buttonHandler}>
+            {this.state.started ? "Pause Prediction" : "Start Prediction"}
           </Button>
           <CircularProgress
             className={classes.progress}

@@ -16,27 +16,54 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: 1200,
+    width: 1400,
     height: 800,
   },
 });
 
-function PersonGrid(props) {
-  const { classes } = props;
+class PersonGrid extends React.Component {
 
-  return (
-    <div className={classes.root}>
-      <GridList cellHeight={151} className={classes.gridList} cols={4}>
-        {data.sort((a, b) => {
-          return a.name < b.name ? -1 : 1
-        }).map(tile => (
-          <GridListTile key={tile.name} cols={1}>
-            <PersonCard age={tile.age} name={tile.name} avatarURL={tile.avatarURL}></PersonCard>
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
-  );
+  constructor() {
+    super()
+    this.state = {
+      person: "",
+      started: false
+    }
+
+    this.fetchIdentified = this.fetchIdentified.bind(this)
+  }
+
+  componentDidMount() {
+    var intervalId = setInterval(this.fetchIdentified, 1000 * 10);
+    this.setState({ intervalId: intervalId });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.person);
+  }
+
+  fetchIdentified() {
+    const person = "Esin H."
+    this.setState({ person })
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <GridList cellHeight={151} className={classes.gridList} cols={4}>
+          {data.sort((a, b) => {
+            return a.name < b.name ? -1 : 1
+          }).map(tile => (
+            <GridListTile key={tile.name} cols={1}>
+              <PersonCard age={tile.age} name={tile.name} avatarURL={tile.avatarURL} identified={this.state.person === tile.name}></PersonCard>
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
+    );
+  }
 }
 
 PersonGrid.propTypes = {
