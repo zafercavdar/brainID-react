@@ -5,7 +5,7 @@ import PersonCard from './PersonCard'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import data from './data.json';
-
+const axios = require('axios');
 
 const styles = theme => ({
   root: {
@@ -34,7 +34,7 @@ class PersonGrid extends React.Component {
   }
 
   componentDidMount() {
-    var intervalId = setInterval(this.fetchIdentified, 1000 * 10);
+    var intervalId = setInterval(this.fetchIdentified, 1000 * 2);
     this.setState({ intervalId: intervalId });
   }
 
@@ -42,8 +42,10 @@ class PersonGrid extends React.Component {
     clearInterval(this.state.person);
   }
 
-  fetchIdentified() {
-    const person = "Esin H."
+  fetchIdentified = async () => {
+    const endpoint = "http://172.20.104.221:3232/result"
+    const res = await axios.get(endpoint)
+    const person = res.data.name
     this.setState({ person })
   }
 

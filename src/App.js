@@ -67,7 +67,6 @@ class App extends React.Component {
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(App);

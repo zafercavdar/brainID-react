@@ -65,7 +65,6 @@ class PersonCard extends React.Component {
 
 PersonCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(PersonCard)
