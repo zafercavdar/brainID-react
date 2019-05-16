@@ -48,10 +48,10 @@ class PersonGrid extends React.Component {
     const endpoint = `http://${IP}:${port}/result`
     const res = await axios.get(endpoint)
     const mapping = {
-      "OZGE": "OZGE A.",
-      "ZAFER": "ZAFER Ç.",
-      "ACOSGUN": "ABDULLAH C.",
-      "SAMED": "SAMED B."
+      "OZGE": "Ozge A.",
+      "ZAFER": "Zafer Ç.",
+      "ACOSGUN": "Abdullah C.",
+      "SAMED": "Samed B."
     }
     const name = res.data.name
     const person = mapping[name] || ""
