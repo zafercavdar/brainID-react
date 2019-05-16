@@ -43,9 +43,19 @@ class PersonGrid extends React.Component {
   }
 
   fetchIdentified = async () => {
-    const endpoint = "http://172.20.104.221:3232/result"
+    const IP = "172.20.104.221"
+    const port = 3232
+    const endpoint = `http://${IP}:${port}/result`
     const res = await axios.get(endpoint)
-    const person = res.data.name
+    const mapping = {
+      "OZGE": "OZGE A.",
+      "ZAFER": "ZAFER Ç.",
+      "ACOSGUN": "ABDULLAH C.",
+      "SAMED": "SAMED B."
+    }
+    const name = res.data.name
+    const person = mapping[name] || ""
+    console.log(person)
     this.setState({ person })
   }
 
@@ -70,6 +80,7 @@ class PersonGrid extends React.Component {
 
 PersonGrid.propTypes = {
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(PersonGrid);
