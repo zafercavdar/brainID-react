@@ -4,7 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import PersonCard from './PersonCard'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import Typography from '@material-ui/core/Typography';
 import data from './data.json';
+const { roundAcc } = require('./utils')
 const axios = require('axios');
 
 const styles = theme => ({
@@ -27,6 +29,7 @@ class PersonGrid extends React.Component {
     super()
     this.state = {
       person: "",
+      acc: 0,
       started: false
     }
 
@@ -43,18 +46,22 @@ class PersonGrid extends React.Component {
   }
 
   fetchIdentified = async () => {
-    const IP = "172.20.104.221"
+    const IP = "172.20.52.187"
     const port = 3232
     const endpoint = `http://${IP}:${port}/result`
     const res = await axios.get(endpoint)
     const mapping = {
       "OZGE": "Ozge A.",
-      "ZAFER": "Zafer Ç.",
+      "ZAFER": "Zafer C.",
       "ACOSGUN": "Abdullah C.",
       "SAMED": "Samed B."
     }
     const name = res.data.name
     const person = mapping[name] || ""
+    const acc = roundAcc()
+    if (person !== this.state.person) {
+      this.setState({ acc })
+    }
     console.log(person)
     this.setState({ person })
   }
@@ -64,6 +71,12 @@ class PersonGrid extends React.Component {
 
     return (
       <div className={classes.root}>
+        <div>
+          <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+          <Typography component="h6" variant="h4" style={{ fontWeight: 'bold' }} >
+            Confidence: {this.state.acc}%
+          </Typography>
+        </div>
         <GridList cellHeight={151} className={classes.gridList} cols={4}>
           {data.sort((a, b) => {
             return a.name < b.name ? -1 : 1
@@ -73,6 +86,7 @@ class PersonGrid extends React.Component {
             </GridListTile>
           ))}
         </GridList>
+
       </div>
     );
   }
